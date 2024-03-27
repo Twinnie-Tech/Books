@@ -5,6 +5,12 @@ import {
   Scripts,
   ScrollRestoration,
 } from "@remix-run/react";
+import { AuthProvider } from "./components/auth";
+import SiteHeader from "./components/SiteHeader";
+import styles from "~/styles/tailwind.css?url";
+import type { LinksFunction } from "@remix-run/node";
+import MainNavigation from "./components/MainNavigation";
+import mainStyles from "~/styles/main.css?url";
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -16,13 +22,25 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body>
-        {children}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `document.querySelectorAll("html > script").forEach((s) => s.parentNode?.removeChild(s));`,
+          }}
+        />
+        <AuthProvider>
+          <SiteHeader />
+          {children}
+        </AuthProvider>
         <ScrollRestoration />
         <Scripts />
       </body>
     </html>
   );
 }
+
+export const links: LinksFunction = () => [
+  { rel: "stylesheet", href: styles },
+];
 
 export default function App() {
   return <Outlet />;
