@@ -18,6 +18,8 @@
     "@remix-run/react": "^2.8.1",
     "@remix-run/serve": "^2.8.1",
     "axios": "^1.6.8",
+    "flowbite-react": "^0.7.5",
+    "guid-typescript": "^1.0.9",
     "isbot": "^4.4.0",
     "luxon": "^3.4.4",
     "moment": "^2.30.1",

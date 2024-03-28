@@ -8,6 +8,7 @@ import { DateTime } from 'luxon';
 import { AuthenticatedTemplate, UnauthenticatedTemplate, MsalAuthenticationTemplate } from '@azure/msal-react';
 import { InteractionType } from "@azure/msal-browser";
 import { loginRequest } from '~/authProvider/authConfig';
+import { deleteBook } from '~/api/Book';
 const LoadingComponent = () => {
     return <p>Authentication in progress</p>
 }
@@ -17,9 +18,6 @@ const ErrorComponent = ({ error }) => {
 }
 const books = () => {
     const books = useLoaderData();
-    const authRequest = {
-        ...loginRequest
-    }
     return (
 
         <div>
@@ -42,7 +40,15 @@ export async function loader() {
 
 
 export async function action({ request }: ActionFunctionArgs) {
+    if (request.method === "DELETE") {
+        console.log("testing values");
+        // const url = new URL(request.url);
+        // const bookId = url.searchParams.get("id");
+        // console.log(bookId);
+        //await deleteBook(bookId);
+    }
     try {
+        console.log(request.method);
         const formData = await request.formData();
         const title = String(formData.get('title'));
         const author = String(formData.get('author'));
@@ -57,7 +63,7 @@ export async function action({ request }: ActionFunctionArgs) {
         }
         console.log(bookData);
         await createBook(bookData);
-        return redirect("/books");
+        // return redirect("/books");
     } catch (err) {
         // Log and handle errors
         console.error("Error creating book:", err);

@@ -4,8 +4,8 @@ import { Configuration, PublicClientApplication } from "@azure/msal-browser";
 // Config object to be passed to Msal on creation
 export const msalConfig: Configuration = {
     auth: {
-        clientId: `${process.env.VITE_AZURE_CLIENT_ID}`,
-        authority: `${process.env.AZURE_AUTHORITY_URL}`,
+        clientId: "79963331-449f-48db-8b13-dc4609aee631",
+        authority: "https://login.microsoftonline.com/common",
         navigateToLoginRequestUrl: true,
         redirectUri: "http://localhost:5173"
     },
