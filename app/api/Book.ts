@@ -16,7 +16,6 @@ export const createBook = async (book: BookType): Promise<void> => {
                 rejectUnauthorized: false
             })
         });
-    console.log(resp);
 }
 
 export const getBooks = async (): Promise<void> => {
@@ -26,16 +25,13 @@ export const getBooks = async (): Promise<void> => {
         })
     });
     const { result } = books.data;
-    console.log(result);
     return result;
 }
 export const deleteBook = async (id: string | null): Promise<void> => {
-    const resp: any = await axios.delete(`https://localhost:7051/api/Book/${id}`, {
-        httpsAgent: new https.Agent({
-            rejectUnauthorized: false
-        })
-    });
-    return resp;
+    console.log(`deleting ${id}`);
+    const resp: any = await axios.delete(`https://localhost:7051/api/Book/${id}`);
+    console.log(resp);
+    return resp.data;
 }
 export const getBook = async (id: Guid): Promise<void> => {
     const book = await axios.get(`https://localhost:7051/api/Book/${id}`, {

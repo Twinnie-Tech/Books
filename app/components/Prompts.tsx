@@ -6,20 +6,19 @@ import { Guid } from "guid-typescript";
 import { deleteBook } from "~/api/Book";
 import { redirect } from "@remix-run/node";
 import { Form } from "@remix-run/react";
-const Prompts = (id: any) => {
+const Prompts = ({ id }: any) => {
     const [openModal, setOpenModal] = useState(false);
     const openMyBook = async () => {
         setOpenModal(true);
     }
-    // const removeBook = async () => {
-    //     const statusDelete = await deleteBook(id);
-    //     console.log(statusDelete);
-    //     setOpenModal(false);
-    //     return redirect("/books");
-    // }
     const handleFormSubmission = async (e: React.SyntheticEvent) => {
         e.preventDefault();
         setOpenModal(false);
+        const data = await deleteBook(id);
+        if (data?.statusCode == 204) {
+            alert("Book deleted successfully");
+        }
+        return redirect("/books");
     }
     return (
         <>
@@ -38,11 +37,11 @@ const Prompts = (id: any) => {
                             Are you sure you want to delete this Book?
                         </h3>
                         <div className="flex justify-center gap-4 mb-4">
-                            <form method="delete" action={'/books?id=' + id} onSubmit={handleFormSubmission}>
-                                <button type="submit" className="bg-red-400 p-2 rounded-md">
+                            <Form method="delete" action={'/books'} onSubmit={handleFormSubmission}>
+                                <button className="bg-red-400 p-2 rounded-md">
                                     {"Yes, I'm sure"}
                                 </button>
-                            </form>
+                            </Form>
                             <button className="bg-sky-400 p-2 rounded-md" onClick={() => setOpenModal(false)}>
                                 No, cancel
                             </button>

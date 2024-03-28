@@ -40,13 +40,6 @@ export async function loader() {
 
 
 export async function action({ request }: ActionFunctionArgs) {
-    if (request.method === "DELETE") {
-        console.log("testing values");
-        // const url = new URL(request.url);
-        // const bookId = url.searchParams.get("id");
-        // console.log(bookId);
-        //await deleteBook(bookId);
-    }
     try {
         console.log(request.method);
         const formData = await request.formData();
@@ -63,12 +56,12 @@ export async function action({ request }: ActionFunctionArgs) {
         }
         console.log(bookData);
         await createBook(bookData);
-        // return redirect("/books");
+        return redirect("/books");
     } catch (err) {
-        // Log and handle errors
         console.error("Error creating book:", err);
         return null; // Return null in case of error
     }
+
 }
 
 
