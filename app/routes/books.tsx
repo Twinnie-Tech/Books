@@ -40,6 +40,9 @@ export async function loader() {
 
 
 export async function action({ request }: ActionFunctionArgs) {
+    if (request.method == 'PUT') {
+        console.log("updating books");
+    }
     try {
         console.log(request.method);
         const formData = await request.formData();

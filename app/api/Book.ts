@@ -4,10 +4,10 @@ import https from 'https';
 import { Guid } from 'guid-typescript';
 
 interface BookType {
-    Title: string;
-    Author: string;
-    Description: string;
-    publishedDate: DateTime | null;
+    Title: string | undefined;
+    Author: string | undefined;
+    Description: string | undefined;
+    publishedDate: DateTime | undefined;
 }
 export const createBook = async (book: BookType): Promise<void> => {
     const resp = await axios.post('https://localhost:7051/api/Book', book,
@@ -42,12 +42,13 @@ export const getBook = async (id: Guid): Promise<void> => {
     const { result } = book.data;
     return result;
 }
-export const updateBook = async (id: Guid): Promise<void> => {
-    const book = await axios.put(`https://localhost:7051/api/Book/${id}`, {
-        httpsAgent: new https.Agent({
-            rejectUnauthorized: false
-        })
-    });
-    const { result } = book.data;
-    return result;
+export const updateBook = async (id: Guid, bookDetails: any): Promise<void> => {
+    const book: any = await axios.put(`https://localhost:7051/api/Book/${id}`,
+        {
+            Title: bookDetails.Title,
+            Author: bookDetails.Author,
+            Description: bookDetails.Description,
+        }
+    );
+    return book;
 };

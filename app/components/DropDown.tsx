@@ -11,7 +11,7 @@ import UpdateBook from "./UpdateBook";
 function MyDropdown({ id }: any) {
     return (
         <div className="flex-col justify-around">
-            <UpdateBook />
+            <UpdateBook id={id} />
             <Prompts id={id} />
         </div>
     )
