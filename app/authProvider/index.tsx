@@ -8,6 +8,7 @@ export const AuthContext = React.createContext({} as {
 });
 const useProvideAuth = () => {
     const [user, setUser] = useState<any>(null);
+    console.log(user);
     const updateUser = (user: any) => {
         setUser(user);
     }
@@ -44,6 +45,6 @@ function AutoLogin({ children }: any) {
         }
     }, [error]);
     const { accounts } = useMsal();
-    console.log(accounts);
+    console.log(accounts[0]);
     return <>{children}</>
 }

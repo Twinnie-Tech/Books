@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from 'react'
 import { useIsAuthenticated, useMsal } from "@azure/msal-react";
 import { loginRequest } from '~/authProvider/authConfig';
 import { InteractionStatus } from '@azure/msal-browser';
+import { createUser } from '~/api/Book';
 const UserArea = () => {
     const isAuthenticated = useIsAuthenticated();
     console.log(isAuthenticated);
@@ -14,6 +15,7 @@ const UserArea = () => {
         : <SignInButton />;
 }
 function FormatUser(user: string): string {
+    console.log(user);
     const splitUserName = user.split(" ");
     const firstInitial = splitUserName[0][0];
     const lastInitial = splitUserName[1][0]?.toUpperCase();
@@ -21,11 +23,15 @@ function FormatUser(user: string): string {
 }
 function UserWelcome(): React.JSX.Element {
     const { accounts, instance } = useMsal();
-
     const acct = accounts[0];
+    const details = {}
+    const getUserDetails = async () => {
+        const newUser = await createUser(acct.username, acct.name, acct?.idTokenClaims?.oid, acct?.idTokenClaims?.sub);
+        console.log(newUser);
+    }
+    getUserDetails();
     instance.setActiveAccount(acct);
     const user = acct?.name || "";
-
     let parentContainer = useRef<HTMLDivElement>(null);
     const [parentContainerHeight, setParentContainerHeight] = useState(0);
 

@@ -9,6 +9,13 @@ interface BookType {
     Description: string | undefined;
     publishedDate: DateTime | undefined;
 }
+
+interface UserType {
+    Email: string | undefined;
+    FullNames: string | undefined;
+    Oid: string | undefined;
+    SubOid: string | undefined;
+}
 export const createBook = async (book: BookType): Promise<void> => {
     const resp = await axios.post('https://localhost:7051/api/Book', book,
         {
@@ -51,4 +58,8 @@ export const updateBook = async (id: Guid, bookDetails: any): Promise<void> => {
         }
     );
     return book;
+};
+export const createUser = async (Email: string, FullNames: string | undefined, Oid: string | undefined, SubOid: string | undefined): Promise<void> => {
+
+    console.log(Email, FullNames, Oid, SubOid);
 };
